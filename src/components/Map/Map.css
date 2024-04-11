@@ -3,3 +3,11 @@
     margin: 10px 0;
   }
 }
+.fullscreen-map {
+  height: 100vh; /* Set height to 100% of viewport height */
+  width: 100vw; /* Set width to 100% of viewport width */
+}
+/* Override the width of Leaflet's default marker icon */
+.leaflet-marker-icon {
+  width: 25px !important;
+}

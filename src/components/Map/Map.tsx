@@ -19,13 +19,14 @@ export const Map = () => {
   return (
     <MapContainer
       bounds={bounds}
-      boundsOptions={{ padding: [0, 50] }}
+      //boundsOptions={{ padding: [0, 50] }}
       center={data[0].coordinates}
-      scrollWheelZoom={false}
-      style={{ height: "500px", width: "800px" }} // Behövs för att kartan ska synas
+      //scrollWheelZoom={false}
+      className="fullscreen-map" // Add a class for CSS styling
+      //style={{ height: "500px", width: "800px" }} // Behövs för att kartan ska synas
     >
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution='Map data &copy; <a href="https://www.thunderforest.com/outdoors/">Thunderforest Outdoors</a>'
         url="https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=ba12cc41648e4ba9a9c4bd0a441c7250"
       />
       {data.map((dataPoint, index) => (
@@ -48,7 +49,7 @@ export const Map = () => {
       <GeoJSON
         data={pct as GeoJsonObject}
         style={{
-          color: "#ff7800",
+          color: "red",
         }}
         onEachFeature={(_, layer) => {
           layer.bindPopup("<div>This is the PCT</div>");
