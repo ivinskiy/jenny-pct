@@ -2,6 +2,7 @@ import "./Map.css";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import { divIcon } from 'leaflet';
 import { MapContainer, Marker, Popup, TileLayer, GeoJSON } from "react-leaflet";
 import { GeoJsonObject } from "geojson";
 import L from "leaflet";
@@ -16,6 +17,14 @@ export const Map = () => {
   const data = getCoordinates(); // Hämta data
   const allCoords = data.map((dataPoint) => dataPoint.coordinates); // Extrahera koordinater
   const bounds = L.latLngBounds(allCoords); // Skapa kart-begränsningen för initial zoom
+  const generateCustomIcon = (dataPoint) => {
+    return divIcon({
+        html: `<div class="marker-label">${dataPoint.dateAndTimeAU.date.toLocaleDateString('sv-SE', { month: 'short', day: '2-digit' })}</div>`,
+        iconSize: [250,36],
+        iconAnchor: [-20,30],
+        className: 'custom-marker-label'
+    });
+};
   return (
     <MapContainer
       bounds={bounds}
@@ -32,18 +41,17 @@ export const Map = () => {
       {data.map((dataPoint, index) => (
         <Marker position={dataPoint.coordinates} key={index}>
           <Popup>
-            <p>{dataPoint.startOrEnd}</p>
-            <p>AU date: {dataPoint.dateAndTimeAU.date.toDateString()}</p>
-            <p>AU time: {dataPoint.dateAndTimeAU.time}</p>
-            <p>US date: {dataPoint.dateAndTimeUS.date.toDateString()}</p>
-            <p>US time: {dataPoint.dateAndTimeUS.time}</p>
-            <p>{`Elevation: ${dataPoint.elevation}`}</p>
-            <p>{`Increase: ${dataPoint.increase}`}</p>
-            <p>{`Decrease: ${dataPoint.decrease}`}</p>
-            <p>{`Distance Google: ${dataPoint.distanceGoogle}`}</p>
-            <p>{`Distance left: ${dataPoint.distanceLeft}`}</p>
-            <p>{`Percent walked: ${dataPoint.percentWalked}`}</p>
+            <p>{`Walked today: ${dataPoint.distanceGoogle} km`}</p>
+            <p>{`Altitude: ${dataPoint.elevation} m`}</p>
+            <p>{`Ascent : ${dataPoint.increase} m`}</p>
+            <p>{`Descent : ${dataPoint.decrease} m`}</p>
+            <p>{`Distance left: ${Math.round(dataPoint.distanceLeft)} km`}</p>
+            <p>{`Percent walked: ${dataPoint.percentWalked.toFixed(2)}%`}</p>
           </Popup>
+        </Marker>
+      ))}
+      {data.map((dataPoint, index) => (
+        <Marker position={dataPoint.coordinates} icon={generateCustomIcon(dataPoint)} key={index}>
         </Marker>
       ))}
       <GeoJSON

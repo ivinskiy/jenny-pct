@@ -11,3 +11,9 @@
 .leaflet-marker-icon {
   width: 25px !important;
 }
+.marker-label {
+  font-size: 12pt;
+  color: black;
+  text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+  white-space: nowrap; 
+}
