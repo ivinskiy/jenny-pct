@@ -17,7 +17,10 @@ export const Map = () => {
   const data = getCoordinates(); // Hämta data
   const allCoords = data.map((dataPoint) => dataPoint.coordinates); // Extrahera koordinater
   const bounds = L.latLngBounds(allCoords); // Skapa kart-begränsningen för initial zoom
-  const generateCustomIcon = (dataPoint) => {
+  const generateCustomIcon = (dataPoint: {
+      startOrEnd?: "Start" | "End"; dateAndTimeAU: any; dateAndTimeUS?: { date: Date; time: string; }; elevation?: Number; coordinates?: {
+        lat: number; lng: number;}; increase?: Number; decrease?: Number; distanceGoogle?: Number; distanceLeft?: Number; percentWalked?: Number;
+    }) => {
     return divIcon({
         html: `<div class="marker-label">${dataPoint.dateAndTimeAU.date.toLocaleDateString('sv-SE', { month: 'short', day: '2-digit' })}</div>`,
         iconSize: [250,36],
@@ -45,7 +48,7 @@ export const Map = () => {
             <p>{`Altitude: ${dataPoint.elevation} m`}</p>
             <p>{`Ascent : ${dataPoint.increase} m`}</p>
             <p>{`Descent : ${dataPoint.decrease} m`}</p>
-            <p>{`Distance left: ${Math.round(dataPoint.distanceLeft)} km`}</p>
+            <p>{`Distance left: ${dataPoint.distanceLeft} km`}</p>
             <p>{`Percent walked: ${dataPoint.percentWalked.toFixed(2)}%`}</p>
           </Popup>
         </Marker>
