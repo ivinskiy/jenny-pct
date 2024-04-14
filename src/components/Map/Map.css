@@ -4,8 +4,8 @@
   }
 }
 .fullscreen-map {
-  height: 100vh; /* Set height to 100% of viewport height */
-  width: 100vw; /* Set width to 100% of viewport width */
+  height: 100%; /* Set height to 100% of viewport height */
+  width: 100%; /* Set width to 100% of viewport width */
 }
 /* Override the width of Leaflet's default marker icon */
 .leaflet-marker-icon {
@@ -16,4 +16,7 @@
   color: black;
   text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
   white-space: nowrap; 
+}
+.leaflet-container {
+  overflow: visible !important;
 }
