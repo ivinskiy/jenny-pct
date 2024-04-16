@@ -2,11 +2,10 @@ import "./Map.css";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import { divIcon } from 'leaflet';
+import { divIcon } from "leaflet";
 import { MapContainer, Marker, Popup, TileLayer, GeoJSON } from "react-leaflet";
 import { GeoJsonObject } from "geojson";
 import L from "leaflet";
-import pct from "./pct.json";
 import { getCoordinates } from "../../utils/getCoordinates";
 
 /**
@@ -18,16 +17,41 @@ export const Map = () => {
   const allCoords = data.map((dataPoint) => dataPoint.coordinates); // Extrahera koordinater
   const bounds = L.latLngBounds(allCoords); // Skapa kart-begränsningen för initial zoom
   const generateCustomIcon = (dataPoint: {
-      startOrEnd?: "Start" | "End"; dateAndTimeAU: any; dateAndTimeUS?: { date: Date; time: string; }; elevation?: Number; coordinates?: {
-        lat: number; lng: number;}; increase?: Number; decrease?: Number; distanceGoogle?: Number; distanceLeft?: Number; percentWalked?: Number;
-    }) => {
+    startOrEnd?: "Start" | "End";
+    dateAndTimeAU: any;
+    dateAndTimeUS?: { date: Date; time: string };
+    elevation?: Number;
+    coordinates?: {
+      lat: number;
+      lng: number;
+    };
+    increase?: Number;
+    decrease?: Number;
+    distanceGoogle?: Number;
+    distanceLeft?: Number;
+    percentWalked?: Number;
+  }) => {
     return divIcon({
-        html: `<div class="marker-label">${dataPoint.dateAndTimeAU.date.toLocaleDateString('sv-SE', { month: 'short', day: '2-digit' })}</div>`,
-        iconSize: [250,36],
-        iconAnchor: [-20,30],
-        className: 'custom-marker-label'
+      html: `<div class="marker-label">${dataPoint.dateAndTimeAU.date.toLocaleDateString(
+        "sv-SE",
+        { month: "short", day: "2-digit" }
+      )}</div>`,
+      iconSize: [250, 36],
+      iconAnchor: [-20, 30],
+      className: "custom-marker-label",
     });
-};
+  };
+
+  // UNDER FINNS KOD SOM KLIPPER PCT-linjen
+  // FUNKAR MEN SER INTE ASSNYGGT UT
+
+  // const test = pct.features[0].geometry.coordinates.filter((coordinate) => {
+  //   if (bounds.contains({ lat: coordinate[1], lng: coordinate[0] })) {
+  //     return true;
+  //   }
+  // });
+  // pct.features[0].geometry.coordinates = test;
+
   return (
     <MapContainer
       bounds={bounds}
@@ -54,10 +78,13 @@ export const Map = () => {
         </Marker>
       ))}
       {data.map((dataPoint, index) => (
-        <Marker position={dataPoint.coordinates} icon={generateCustomIcon(dataPoint)} key={index}>
-        </Marker>
+        <Marker
+          position={dataPoint.coordinates}
+          icon={generateCustomIcon(dataPoint)}
+          key={index}
+        ></Marker>
       ))}
-      <GeoJSON
+      {/* <GeoJSON
         data={pct as GeoJsonObject}
         style={{
           color: "red",
@@ -65,7 +92,7 @@ export const Map = () => {
         onEachFeature={(_, layer) => {
           layer.bindPopup("<div>This is the PCT</div>");
         }}
-      />
+      /> */}
     </MapContainer>
   );
 };
