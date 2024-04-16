@@ -3,8 +3,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import { divIcon } from "leaflet";
-import { MapContainer, Marker, Popup, TileLayer, GeoJSON } from "react-leaflet";
-import { GeoJsonObject } from "geojson";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import { getCoordinates } from "../../utils/getCoordinates";
 
